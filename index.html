@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabungan Digital Futuristik</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: #0a0e27;
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(0, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(138, 43, 226, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(255, 0, 255, 0.1) 0%, transparent 50%);
+            animation: bgPulse 10s ease-in-out infinite;
+        }
+
+        @keyframes bgPulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: slideDown 0.8s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 48px;
+            font-weight: 900;
+            background: linear-gradient(90deg, #00ffff, #ff00ff, #00ffff);
+            background-size: 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 3s ease infinite;
+            text-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+            margin-bottom: 10px;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: #00ffff;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .balance-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 35px;
+        }
+
+        .card {
+            background: rgba(15, 25, 50, 0.8);
+            border: 2px solid rgba(0, 255, 255, 0.3);
+            padding: 30px;
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            animation: cardFloat 3s ease-in-out infinite;
+            transition: all 0.3s ease;
+        }
+
+        .card:nth-child(1) { animation-delay: 0s; }
+        .card:nth-child(2) { animation-delay: 0.2s; }
+        .card:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes cardFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .card:hover {
+            transform: scale(1.05) translateY(-5px) !important;
+            border-color: rgba(0, 255, 255, 0.8);
+            box-shadow: 0 20px 60px rgba(0, 255, 255, 0.4);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(0, 255, 255, 0.1), transparent);
+            animation: cardShine 3s infinite;
+        }
+
+        @keyframes cardShine {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .card h3 {
+            color: #00ffff;
+            font-size: 14px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card .amount {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 36px;
+            font-weight: 700;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 0 20px currentColor;
+        }
+
+        .card.income .amount {
+            color: #00ff88;
+        }
+
+        .card.expense .amount {
+            color: #ff0055;
+        }
+
+        .card.balance .amount {
+            color: #00ffff;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 35px;
+        }
+
+        .panel {
+            background: rgba(15, 25, 50, 0.9);
+            border: 2px solid rgba(138, 43, 226, 0.4);
+            padding: 30px;
+            border-radius: 20px;
+            position: relative;
+            backdrop-filter: blur(10px);
+            animation: panelFadeIn 1s ease-out;
+        }
+
+        @keyframes panelFadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .panel::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #00ffff, #ff00ff);
+            animation: borderGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes borderGlow {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        .panel h2 {
+            font-family: 'Orbitron', sans-serif;
+            color: #ff00ff;
+            margin-bottom: 25px;
+            font-size: 24px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #00ffff;
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid rgba(0, 255, 255, 0.3);
+            border-radius: 10px;
+            font-size: 16px;
+            background: rgba(10, 14, 39, 0.8);
+            color: #fff;
+            font-family: 'Rajdhani', sans-serif;
+            transition: all 0.3s;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #00ffff;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .btn-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        button {
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        button:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        button span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn-income {
+            background: linear-gradient(135deg, #00ff88, #00cc6f);
+            color: #000;
+            box-shadow: 0 5px 20px rgba(0, 255, 136, 0.4);
+        }
+
+        .btn-income:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.6);
+        }
+
+        .btn-expense {
+            background: linear-gradient(135deg, #ff0055, #cc0044);
+            color: #fff;
+            box-shadow: 0 5px 20px rgba(255, 0, 85, 0.4);
+        }
+
+        .btn-expense:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 0, 85, 0.6);
+        }
+
+        .transactions {
+            background: rgba(15, 25, 50, 0.9);
+            border: 2px solid rgba(138, 43, 226, 0.4);
+            padding: 30px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .transactions h2 {
+            font-family: 'Orbitron', sans-serif;
+            color: #ff00ff;
+            margin-bottom: 25px;
+            font-size: 24px;
+        }
+
+        .transaction-list {
+            max-height: 500px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .transaction-list::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .transaction-list::-webkit-scrollbar-track {
+            background: rgba(0, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        .transaction-list::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #00ffff, #ff00ff);
+            border-radius: 10px;
+        }
+
+        .transaction-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            border-radius: 10px;
+            margin-bottom: 15px;
+            background: rgba(10, 14, 39, 0.6);
+            transition: all 0.3s;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .transaction-item:hover {
+            background: rgba(0, 255, 255, 0.1);
+            border-color: #00ffff;
+            transform: translateX(10px);
+        }
+
+        .transaction-info {
+            flex: 1;
+        }
+
+        .transaction-desc {
+            font-weight: 700;
+            font-size: 18px;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        .transaction-category {
+            font-size: 12px;
+            color: #00ffff;
+            background: rgba(0, 255, 255, 0.2);
+            padding: 5px 12px;
+            border-radius: 20px;
+            display: inline-block;
+            border: 1px solid rgba(0, 255, 255, 0.4);
+        }
+
+        .transaction-date {
+            font-size: 12px;
+            color: #999;
+            margin-left: 15px;
+        }
+
+        .transaction-amount {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            margin-left: 20px;
+            text-shadow: 0 0 10px currentColor;
+        }
+
+        .transaction-amount.income {
+            color: #00ff88;
+        }
+
+        .transaction-amount.expense {
+            color: #ff0055;
+        }
+
+        .delete-btn {
+            background: linear-gradient(135deg, #ff0055, #cc0044);
+            color: #fff;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-left: 15px;
+            font-size: 14px;
+            font-family: 'Orbitron', sans-serif;
+            transition: all 0.3s;
+        }
+
+        .delete-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 20px rgba(255, 0, 85, 0.6);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px;
+            color: #666;
+            font-size: 18px;
+        }
+
+        .savings-goal {
+            background: rgba(15, 25, 50, 0.9);
+            border: 2px solid rgba(138, 43, 226, 0.4);
+            padding: 30px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .savings-goal h2 {
+            font-family: 'Orbitron', sans-serif;
+            color: #ff00ff;
+            margin-bottom: 25px;
+            font-size: 24px;
+        }
+
+        .goal-input-group {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .progress-container {
+            margin-top: 20px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 40px;
+            background: rgba(10, 14, 39, 0.8);
+            border: 2px solid rgba(0, 255, 255, 0.3);
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-bar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: progressShine 2s infinite;
+        }
+
+        @keyframes progressShine {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00ffff, #ff00ff, #00ffff);
+            background-size: 200%;
+            animation: progressGradient 3s ease infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: 700;
+            font-size: 16px;
+            font-family: 'Orbitron', sans-serif;
+            transition: width 0.5s ease;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
+        }
+
+        @keyframes progressGradient {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .goal-info {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            color: #00ffff;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: #00ffff;
+            border-radius: 50%;
+            animation: float 20s infinite;
+            box-shadow: 0 0 10px #00ffff;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(100px);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 32px;
+            }
+            
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .balance-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .btn-group {
+                grid-template-columns: 1fr;
+            }
+
+            .goal-input-group {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+    
+    <div class="particles" id="particles"></div>
+
+    <div class="container">
+        <header>
+            <h1>⚡ NEXUS FINANCE ⚡</h1>
+            <p class="subtitle">Digital Wallet System</p>
+        </header>
+
+        <div class="balance-cards">
+            <div class="card balance">
+                <h3>⚡ Total Balance</h3>
+                <div class="amount" id="totalBalance">Rp 0</div>
+            </div>
+            <div class="card income">
+                <h3>📈 Total Income</h3>
+                <div class="amount" id="totalIncome">Rp 0</div>
+            </div>
+            <div class="card expense">
+                <h3>📉 Total Expense</h3>
+                <div class="amount" id="totalExpense">Rp 0</div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="panel">
+                <h2>🔥 Add Transaction</h2>
+                <form id="transactionForm">
+                    <div class="form-group">
+                        <label>Description</label>
+                        <input type="text" id="description" placeholder="Enter transaction description" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Amount (Rp)</label>
+                        <input type="number" id="amount" placeholder="0" required min="1">
+                    </div>
+                    <div class="form-group">
+                        <label>Category</label>
+                        <select id="category" required>
+                            <option value="">Select Category</option>
+                            <option value="Salary">💼 Salary</option>
+                            <option value="Bonus">🎁 Bonus</option>
+                            <option value="Investment">📊 Investment</option>
+                            <option value="Food">🍔 Food</option>
+                            <option value="Transport">🚗 Transport</option>
+                            <option value="Shopping">🛍️ Shopping</option>
+                            <option value="Entertainment">🎮 Entertainment</option>
+                            <option value="Bills">📱 Bills</option>
+                            <option value="Other">📦 Other</option>
+                        </select>
+                    </div>
+                    <div class="btn-group">
+                        <button type="button" class="btn-income" onclick="addTransaction('income')">
+                            <span>➕ Income</span>
+                        </button>
+                        <button type="button" class="btn-expense" onclick="addTransaction('expense')">
+                            <span>➖ Expense</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="savings-goal">
+                <h2>🎯 Savings Goal</h2>
+                <div class="goal-input-group">
+                    <input type="number" id="savingsGoal" placeholder="Set your savings target" min="0">
+                    <button class="btn-income" onclick="setGoal()"><span>Set Target</span></button>
+                </div>
+                <div id="goalDisplay" style="display: none;" class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill">0%</div>
+                    </div>
+                    <div class="goal-info">
+                        <span>🎯 Target: <strong id="goalAmount">Rp 0</strong></span>
+                        <span>✨ Achieved: <strong id="achievedAmount">Rp 0</strong></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="transactions">
+            <h2>📜 Transaction History</h2>
+            <div class="transaction-list" id="transactionList">
+                <div class="empty-state">
+                    <p>No transactions yet. Start adding your first transaction!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Create particles
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 50; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 20 + 's';
+            particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+            particlesContainer.appendChild(particle);
+        }
+
+        let transactions = [];
+        let savingsGoalAmount = 0;
+
+        function formatCurrency(amount) {
+            return 'Rp ' + amount.toLocaleString('id-ID');
+        }
+
+        function formatDate(date) {
+            return new Date(date).toLocaleDateString('id-ID', {
+                day: 'numeric',
+                month: 'short',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        function addTransaction(type) {
+            const desc = document.getElementById('description').value;
+            const amount = parseFloat(document.getElementById('amount').value);
+            const category = document.getElementById('category').value;
+
+            if (!desc || !amount || !category) {
+                alert('⚠️ Please fill in all fields!');
+                return;
+            }
+
+            const transaction = {
+                id: Date.now(),
+                description: desc,
+                amount: amount,
+                category: category,
+                type: type,
+                date: new Date().toISOString()
+            };
+
+            transactions.unshift(transaction);
+            updateUI();
+            document.getElementById('transactionForm').reset();
+
+            // Success animation
+            const btn = event.target.closest('button');
+            btn.style.transform = 'scale(0.95)';
+            setTimeout(() => btn.style.transform = '', 200);
+        }
+
+        function deleteTransaction(id) {
+            transactions = transactions.filter(t => t.id !== id);
+            updateUI();
+        }
+
+        function updateUI() {
+            const income = transactions
+                .filter(t => t.type === 'income')
+                .reduce((sum, t) => sum + t.amount, 0);
+
+            const expense = transactions
+                .filter(t => t.type === 'expense')
+                .reduce((sum, t) => sum + t.amount, 0);
+
+            const balance = income - expense;
+
+            // Animate number changes
+            animateValue('totalIncome', income);
+            animateValue('totalExpense', expense);
+            animateValue('totalBalance', balance);
+
+            const listEl = document.getElementById('transactionList');
+            
+            if (transactions.length === 0) {
+                listEl.innerHTML = '<div class="empty-state"><p>No transactions yet. Start adding your first transaction!</p></div>';
+            } else {
+                listEl.innerHTML = transactions.map(t => `
+                    <div class="transaction-item">
+                        <div class="transaction-info">
+                            <div class="transaction-desc">${t.description}</div>
+                            <span class="transaction-category">${t.category}</span>
+                            <span class="transaction-date">${formatDate(t.date)}</span>
+                        </div>
+                        <div class="transaction-amount ${t.type}">
+                            ${t.type === 'income' ? '+' : '-'} ${formatCurrency(t.amount)}
+                        </div>
+                        <button class="delete-btn" onclick="deleteTransaction(${t.id})">🗑️</button>
+                    </div>
+                `).join('');
+            }
+
+            updateGoalProgress(balance);
+        }
+
+        function animateValue(id, value) {
+            const el = document.getElementById(id);
+            el.textContent = formatCurrency(value);
+        }
+
+        function setGoal() {
+            const goal = parseFloat(document.getElementById('savingsGoal').value);
+            if (!goal || goal <= 0) {
+                alert('⚠️ Please enter a valid target!');
+                return;
+            }
+
+            savingsGoalAmount = goal;
+            document.getElementById('goalDisplay').style.display = 'block';
+            document.getElementById('goalAmount').textContent = formatCurrency(goal);
+            updateGoalProgress(getCurrentBalance());
+        }
+
+        function getCurrentBalance() {
+            const income = transactions
+                .filter(t => t.type === 'income')
+                .reduce((sum, t) => sum + t.amount, 0);
+            const expense = transactions
+                .filter(t => t.type === 'expense')
+                .reduce((sum, t) => sum + t.amount, 0);
+            return income - expense;
+        }
+
+        function updateGoalProgress(balance) {
+            if (savingsGoalAmount > 0) {
+                const percentage = Math.min((balance / savingsGoalAmount) * 100, 100);
+                document.getElementById('progressFill').style.width = percentage + '%';
+                document.getElementById('progressFill').textContent = percentage.toFixed(1) + '%';
+                document.getElementById('achievedAmount').textContent = formatCurrency(balance);
+            }
+        }
+
+        updateUI();
+    </script>
+</body>
+</html>
