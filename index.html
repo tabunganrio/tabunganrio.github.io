@@ -49,10 +49,184 @@
             z-index: 1;
         }
 
-        header {
+        /* LOGIN SCREEN */
+        .login-screen {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            position: relative;
+            z-index: 1;
+        }
+
+        .login-box {
+            background: rgba(15, 25, 50, 0.95);
+            border: 2px solid rgba(0, 255, 255, 0.5);
+            padding: 50px;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 450px;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 20px 60px rgba(0, 255, 255, 0.3);
+            animation: loginFadeIn 0.8s ease-out;
+        }
+
+        @keyframes loginFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .login-box h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 36px;
             text-align: center;
+            background: linear-gradient(90deg, #00ffff, #ff00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .login-box .subtitle {
+            text-align: center;
+            color: #00ffff;
+            font-size: 14px;
+            letter-spacing: 2px;
             margin-bottom: 40px;
+            text-transform: uppercase;
+        }
+
+        .tab-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .tab-btn {
+            padding: 12px;
+            border: 2px solid rgba(0, 255, 255, 0.3);
+            background: transparent;
+            color: #00ffff;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 14px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+        }
+
+        .tab-btn.active {
+            background: rgba(0, 255, 255, 0.2);
+            border-color: #00ffff;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+        }
+
+        .tab-btn:hover {
+            border-color: #00ffff;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #00ffff;
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid rgba(0, 255, 255, 0.3);
+            border-radius: 10px;
+            font-size: 16px;
+            background: rgba(10, 14, 39, 0.8);
+            color: #fff;
+            font-family: 'Rajdhani', sans-serif;
+            transition: all 0.3s;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #00ffff;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, #00ffff, #00cccc);
+            color: #000;
+            transition: all 0.3s;
+            box-shadow: 0 5px 20px rgba(0, 255, 255, 0.4);
+            margin-top: 10px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 255, 255, 0.6);
+        }
+
+        .error-message {
+            background: rgba(255, 0, 85, 0.2);
+            border: 1px solid #ff0055;
+            color: #ff0055;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 600;
+            display: none;
+        }
+
+        .success-message {
+            background: rgba(0, 255, 136, 0.2);
+            border: 1px solid #00ff88;
+            color: #00ff88;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 600;
+            display: none;
+        }
+
+        /* MAIN APP */
+        .main-app {
+            display: none;
+        }
+
+        header {
+            background: rgba(15, 25, 50, 0.9);
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            border: 2px solid rgba(0, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
             animation: slideDown 0.8s ease-out;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         @keyframes slideDown {
@@ -66,9 +240,9 @@
             }
         }
 
-        h1 {
+        .header-left h1 {
             font-family: 'Orbitron', sans-serif;
-            font-size: 48px;
+            font-size: 36px;
             font-weight: 900;
             background: linear-gradient(90deg, #00ffff, #ff00ff, #00ffff);
             background-size: 200%;
@@ -76,7 +250,7 @@
             -webkit-text-fill-color: transparent;
             animation: gradientShift 3s ease infinite;
             text-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
-            margin-bottom: 10px;
+            margin-bottom: 5px;
         }
 
         @keyframes gradientShift {
@@ -85,10 +259,62 @@
         }
 
         .subtitle {
-            font-size: 18px;
+            font-size: 14px;
             color: #00ffff;
-            letter-spacing: 3px;
+            letter-spacing: 2px;
             text-transform: uppercase;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .username-display {
+            font-family: 'Orbitron', sans-serif;
+            color: #00ff88;
+            font-size: 18px;
+            padding: 10px 20px;
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            border-radius: 10px;
+        }
+
+        .btn-change-password {
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #ff00ff, #cc00cc);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+        }
+
+        .btn-change-password:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(255, 0, 255, 0.6);
+        }
+
+        .btn-logout {
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #ff0055, #cc0044);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+        }
+
+        .btn-logout:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(255, 0, 85, 0.6);
         }
 
         .balance-cards {
@@ -223,39 +449,6 @@
             font-size: 24px;
             text-transform: uppercase;
             letter-spacing: 2px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: #00ffff;
-            font-weight: 600;
-            font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        input, select {
-            width: 100%;
-            padding: 15px;
-            border: 2px solid rgba(0, 255, 255, 0.3);
-            border-radius: 10px;
-            font-size: 16px;
-            background: rgba(10, 14, 39, 0.8);
-            color: #fff;
-            font-family: 'Rajdhani', sans-serif;
-            transition: all 0.3s;
-        }
-
-        input:focus, select:focus {
-            outline: none;
-            border-color: #00ffff;
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
-            transform: translateY(-2px);
         }
 
         .btn-group {
@@ -578,8 +771,18 @@
         }
 
         @media (max-width: 768px) {
-            h1 {
-                font-size: 32px;
+            .header-left h1 {
+                font-size: 24px;
+            }
+            
+            header {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .user-info {
+                width: 100%;
+                justify-content: space-between;
             }
             
             .main-content {
@@ -597,102 +800,185 @@
             .goal-input-group {
                 grid-template-columns: 1fr;
             }
+
+            .login-box {
+                padding: 30px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="bg-animation"></div>
-    
     <div class="particles" id="particles"></div>
 
-    <div class="container">
-        <header>
-            <h1>⚡ NEXUS FINANCE ⚡</h1>
-            <p class="subtitle">Digital Wallet System</p>
-        </header>
+    <!-- LOGIN SCREEN -->
+    <div class="login-screen" id="loginScreen">
+        <div class="login-box">
+            <h2>⚡ NEXUS FINANCE ⚡</h2>
+            <p class="subtitle">Secure Access Portal</p>
+            
+            <div class="tab-buttons">
+                <button class="tab-btn active" onclick="switchTab('login')">Login</button>
+                <button class="tab-btn" onclick="switchTab('register')">Register</button>
+            </div>
 
-        <div class="balance-cards">
-            <div class="card balance">
-                <h3>⚡ Total Balance</h3>
-                <div class="amount" id="totalBalance">Rp 0</div>
+            <div class="error-message" id="errorMessage"></div>
+            <div class="success-message" id="successMessage"></div>
+
+            <!-- LOGIN FORM -->
+            <div id="loginForm">
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" id="loginUsername" placeholder="Enter your username">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="loginPassword" placeholder="Enter your password">
+                </div>
+                <button class="btn-primary" onclick="login()">🔐 Login</button>
             </div>
-            <div class="card income">
-                <h3>📈 Total Income</h3>
-                <div class="amount" id="totalIncome">Rp 0</div>
-            </div>
-            <div class="card expense">
-                <h3>📉 Total Expense</h3>
-                <div class="amount" id="totalExpense">Rp 0</div>
+
+            <!-- REGISTER FORM -->
+            <div id="registerForm" style="display: none;">
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" id="regUsername" placeholder="Choose a username">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="regPassword" placeholder="Choose a password">
+                </div>
+                <div class="form-group">
+                    <label>Confirm Password</label>
+                    <input type="password" id="regConfirmPassword" placeholder="Confirm your password">
+                </div>
+                <button class="btn-primary" onclick="register()">✨ Create Account</button>
             </div>
         </div>
+    </div>
 
-        <div class="main-content">
-            <div class="panel">
-                <h2>🔥 Add Transaction</h2>
-                <form id="transactionForm">
-                    <div class="form-group">
-                        <label>Description</label>
-                        <input type="text" id="description" placeholder="Enter transaction description" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Amount (Rp)</label>
-                        <input type="number" id="amount" placeholder="0" required min="1">
-                    </div>
-                    <div class="form-group">
-                        <label>Category</label>
-                        <select id="category" required>
-                            <option value="">Select Category</option>
-                            <option value="Salary">💼 Salary</option>
-                            <option value="Bonus">🎁 Bonus</option>
-                            <option value="Investment">📊 Investment</option>
-                            <option value="Food">🍔 Food</option>
-                            <option value="Transport">🚗 Transport</option>
-                            <option value="Shopping">🛍️ Shopping</option>
-                            <option value="Entertainment">🎮 Entertainment</option>
-                            <option value="Bills">📱 Bills</option>
-                            <option value="Other">📦 Other</option>
-                        </select>
-                    </div>
-                    <div class="btn-group">
-                        <button type="button" class="btn-income" onclick="addTransaction('income')">
-                            <span>➕ Income</span>
-                        </button>
-                        <button type="button" class="btn-expense" onclick="addTransaction('expense')">
-                            <span>➖ Expense</span>
-                        </button>
-                    </div>
-                </form>
-            </div>
-
-            <div class="savings-goal">
-                <h2>🎯 Savings Goal</h2>
-                <div class="goal-input-group">
-                    <input type="number" id="savingsGoal" placeholder="Set your savings target" min="0">
-                    <button class="btn-income" onclick="setGoal()"><span>Set Target</span></button>
+    <!-- MAIN APP -->
+    <div class="main-app" id="mainApp">
+        <div class="container">
+            <header>
+                <div class="header-left">
+                    <h1>⚡ NEXUS FINANCE ⚡</h1>
+                    <p class="subtitle">Digital Wallet System</p>
                 </div>
-                <div id="goalDisplay" style="display: none;" class="progress-container">
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="progressFill">0%</div>
-                    </div>
-                    <div class="goal-info">
-                        <span>🎯 Target: <strong id="goalAmount">Rp 0</strong></span>
-                        <span>✨ Achieved: <strong id="achievedAmount">Rp 0</strong></span>
-                    </div>
+                <div class="user-info">
+                    <div class="username-display">👤 <span id="currentUsername"></span></div>
+                    <button class="btn-logout" onclick="logout()">🚪 Logout</button>
+                </div>
+            </header>
+
+            <div class="balance-cards">
+                <div class="card balance">
+                    <h3>⚡ Total Balance</h3>
+                    <div class="amount" id="totalBalance">Rp 0</div>
+                </div>
+                <div class="card income">
+                    <h3>📈 Total Income</h3>
+                    <div class="amount" id="totalIncome">Rp 0</div>
+                </div>
+                <div class="card expense">
+                    <h3>📉 Total Expense</h3>
+                    <div class="amount" id="totalExpense">Rp 0</div>
                 </div>
             </div>
-        </div>
 
-        <div class="transactions">
-            <h2>📜 Transaction History</h2>
-            <div class="transaction-list" id="transactionList">
-                <div class="empty-state">
-                    <p>No transactions yet. Start adding your first transaction!</p>
+            <div class="main-content">
+                <div class="panel">
+                    <h2>🔥 Add Transaction</h2>
+                    <form id="transactionForm">
+                        <div class="form-group">
+                            <label>Description</label>
+                            <input type="text" id="description" placeholder="Enter transaction description" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Amount (Rp)</label>
+                            <input type="text" id="amount" placeholder="0" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Category</label>
+                            <select id="category" required>
+                                <option value="">Select Category</option>
+                                <option value="Uang Jajan">💰 Uang Jajan</option>
+                                <option value="Hadiah">🎁 Hadiah</option>
+                                <option value="Uang Saku">👛 Uang Saku Orang Tua</option>
+                                <option value="Jual Barang">🏪 Jual Barang</option>
+                                <option value="Makan & Minum">🍔 Makan & Minum</option>
+                                <option value="Jajanan">🍭 Jajanan</option>
+                                <option value="Transport">🚌 Transport/Ongkos</option>
+                                <option value="Buku & Alat Tulis">📚 Buku & Alat Tulis</option>
+                                <option value="Tugas Sekolah">📝 Tugas Sekolah</option>
+                                <option value="Pulsa & Kuota">📱 Pulsa & Kuota</option>
+                                <option value="Hiburan">🎮 Game & Hiburan</option>
+                                <option value="Belanja">🛍️ Belanja</option>
+                                <option value="Hobi">⚽ Hobi & Olahraga</option>
+                                <option value="Sedekah">🤲 Sedekah/Amal</option>
+                                <option value="Nabung">🏦 Nabung</option>
+                                <option value="Lainnya">📦 Lainnya</option>
+                            </select>
+                        </div>
+                        <div class="btn-group">
+                            <button type="button" class="btn-income" onclick="addTransaction('income')">
+                                <span>➕ Income</span>
+                            </button>
+                            <button type="button" class="btn-expense" onclick="addTransaction('expense')">
+                                <span>➖ Expense</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="savings-goal">
+                    <h2>🎯 Savings Goal</h2>
+                    <div class="goal-input-group">
+                        <input type="text" id="savingsGoal" placeholder="Set your savings target" oninput="formatNumberInput(this)">
+                        <button class="btn-income" onclick="setGoal()"><span>Set Target</span></button>
+                    </div>
+                    <div id="goalDisplay" style="display: none;" class="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill">0%</div>
+                        </div>
+                        <div class="goal-info">
+                            <span>🎯 Target: <strong id="goalAmount">Rp 0</strong></span>
+                            <span>✨ Achieved: <strong id="achievedAmount">Rp 0</strong></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="transactions">
+                <h2>📜 Transaction History</h2>
+                <div class="transaction-list" id="transactionList">
+                    <div class="empty-state">
+                        <p>No transactions yet. Start adding your first transaction!</p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
+        // Database simulasi menggunakan object
+        const database = {
+            users: {},
+            getUserData: function(username) {
+                if (!this.users[username]) {
+                    this.users[username] = {
+                        password: '',
+                        transactions: [],
+                        savingsGoal: 0
+                    };
+                }
+                return this.users[username];
+            }
+        };
+
+        let currentUser = null;
+        let currentTab = 'login';
+
         // Create particles
         const particlesContainer = document.getElementById('particles');
         for (let i = 0; i < 50; i++) {
@@ -704,8 +990,147 @@
             particlesContainer.appendChild(particle);
         }
 
-        let transactions = [];
-        let savingsGoalAmount = 0;
+        function switchTab(tab) {
+            currentTab = tab;
+            const loginForm = document.getElementById('loginForm');
+            const registerForm = document.getElementById('registerForm');
+            const tabs = document.querySelectorAll('.tab-btn');
+            
+            tabs.forEach(t => t.classList.remove('active'));
+            
+            if (tab === 'login') {
+                loginForm.style.display = 'block';
+                registerForm.style.display = 'none';
+                tabs[0].classList.add('active');
+            } else {
+                loginForm.style.display = 'none';
+                registerForm.style.display = 'block';
+                tabs[1].classList.add('active');
+            }
+            
+            hideMessages();
+        }
+
+        function showError(message) {
+            const errorEl = document.getElementById('errorMessage');
+            errorEl.textContent = message;
+            errorEl.style.display = 'block';
+            setTimeout(() => errorEl.style.display = 'none', 3000);
+        }
+
+        function showSuccess(message) {
+            const successEl = document.getElementById('successMessage');
+            successEl.textContent = message;
+            successEl.style.display = 'block';
+            setTimeout(() => successEl.style.display = 'none', 3000);
+        }
+
+        function hideMessages() {
+            document.getElementById('errorMessage').style.display = 'none';
+            document.getElementById('successMessage').style.display = 'none';
+        }
+
+        function register() {
+            const username = document.getElementById('regUsername').value.trim();
+            const password = document.getElementById('regPassword').value;
+            const confirmPassword = document.getElementById('regConfirmPassword').value;
+
+            if (!username || !password || !confirmPassword) {
+                showError('⚠️ Please fill in all fields!');
+                return;
+            }
+
+            if (username.length < 3) {
+                showError('⚠️ Username must be at least 3 characters!');
+                return;
+            }
+
+            if (password.length < 4) {
+                showError('⚠️ Password must be at least 4 characters!');
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                showError('⚠️ Passwords do not match!');
+                return;
+            }
+
+            if (database.users[username] && database.users[username].password) {
+                showError('⚠️ Username already exists!');
+                return;
+            }
+
+            // Create new user
+            database.users[username] = {
+                password: password,
+                transactions: [],
+                savingsGoal: 0
+            };
+
+            showSuccess('✅ Account created successfully! Please login.');
+            
+            // Clear form
+            document.getElementById('regUsername').value = '';
+            document.getElementById('regPassword').value = '';
+            document.getElementById('regConfirmPassword').value = '';
+            
+            // Switch to login
+            setTimeout(() => switchTab('login'), 1500);
+        }
+
+        function login() {
+            const username = document.getElementById('loginUsername').value.trim();
+            const password = document.getElementById('loginPassword').value;
+
+            if (!username || !password) {
+                showError('⚠️ Please enter username and password!');
+                return;
+            }
+
+            const userData = database.users[username];
+
+            if (!userData || !userData.password) {
+                showError('⚠️ User not found! Please register first.');
+                return;
+            }
+
+            if (userData.password !== password) {
+                showError('⚠️ Wrong password!');
+                return;
+            }
+
+            // Login successful
+            currentUser = username;
+            document.getElementById('currentUsername').textContent = username;
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('mainApp').style.display = 'block';
+            
+            // Load user data
+            loadUserData();
+        }
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                currentUser = null;
+                document.getElementById('loginScreen').style.display = 'flex';
+                document.getElementById('mainApp').style.display = 'none';
+                document.getElementById('loginUsername').value = '';
+                document.getElementById('loginPassword').value = '';
+            }
+        }
+
+        function loadUserData() {
+            const userData = database.getUserData(currentUser);
+            updateUI();
+            
+            // Load savings goal if exists
+            if (userData.savingsGoal > 0) {
+                document.getElementById('savingsGoal').value = userData.savingsGoal;
+                document.getElementById('goalDisplay').style.display = 'block';
+                document.getElementById('goalAmount').textContent = formatCurrency(userData.savingsGoal);
+                updateGoalProgress(getCurrentBalance());
+            }
+        }
 
         function formatCurrency(amount) {
             return 'Rp ' + amount.toLocaleString('id-ID');
@@ -721,13 +1146,33 @@
             });
         }
 
+        function formatNumberInput(input) {
+            let value = input.value.replace(/\D/g, '');
+            if (value) {
+                value = parseInt(value).toLocaleString('id-ID');
+            }
+            input.value = value;
+        }
+
+        function parseFormattedNumber(value) {
+            return parseInt(value.replace(/\./g, '')) || 0;
+        }
+
         function addTransaction(type) {
+            if (!currentUser) return;
+
             const desc = document.getElementById('description').value;
-            const amount = parseFloat(document.getElementById('amount').value);
+            const amountStr = document.getElementById('amount').value;
+            const amount = parseFormattedNumber(amountStr);
             const category = document.getElementById('category').value;
 
             if (!desc || !amount || !category) {
                 alert('⚠️ Please fill in all fields!');
+                return;
+            }
+
+            if (amount <= 0) {
+                alert('⚠️ Amount must be greater than 0!');
                 return;
             }
 
@@ -740,7 +1185,9 @@
                 date: new Date().toISOString()
             };
 
-            transactions.unshift(transaction);
+            const userData = database.getUserData(currentUser);
+            userData.transactions.unshift(transaction);
+            
             updateUI();
             document.getElementById('transactionForm').reset();
 
@@ -751,11 +1198,19 @@
         }
 
         function deleteTransaction(id) {
-            transactions = transactions.filter(t => t.id !== id);
+            if (!currentUser) return;
+
+            const userData = database.getUserData(currentUser);
+            userData.transactions = userData.transactions.filter(t => t.id !== id);
             updateUI();
         }
 
         function updateUI() {
+            if (!currentUser) return;
+
+            const userData = database.getUserData(currentUser);
+            const transactions = userData.transactions;
+
             const income = transactions
                 .filter(t => t.type === 'income')
                 .reduce((sum, t) => sum + t.amount, 0);
@@ -766,10 +1221,9 @@
 
             const balance = income - expense;
 
-            // Animate number changes
-            animateValue('totalIncome', income);
-            animateValue('totalExpense', expense);
-            animateValue('totalBalance', balance);
+            document.getElementById('totalIncome').textContent = formatCurrency(income);
+            document.getElementById('totalExpense').textContent = formatCurrency(expense);
+            document.getElementById('totalBalance').textContent = formatCurrency(balance);
 
             const listEl = document.getElementById('transactionList');
             
@@ -794,25 +1248,31 @@
             updateGoalProgress(balance);
         }
 
-        function animateValue(id, value) {
-            const el = document.getElementById(id);
-            el.textContent = formatCurrency(value);
-        }
-
         function setGoal() {
-            const goal = parseFloat(document.getElementById('savingsGoal').value);
+            if (!currentUser) return;
+
+            const goalStr = document.getElementById('savingsGoal').value;
+            const goal = parseFormattedNumber(goalStr);
+            
             if (!goal || goal <= 0) {
                 alert('⚠️ Please enter a valid target!');
                 return;
             }
 
-            savingsGoalAmount = goal;
+            const userData = database.getUserData(currentUser);
+            userData.savingsGoal = goal;
+
             document.getElementById('goalDisplay').style.display = 'block';
             document.getElementById('goalAmount').textContent = formatCurrency(goal);
             updateGoalProgress(getCurrentBalance());
         }
 
         function getCurrentBalance() {
+            if (!currentUser) return 0;
+
+            const userData = database.getUserData(currentUser);
+            const transactions = userData.transactions;
+
             const income = transactions
                 .filter(t => t.type === 'income')
                 .reduce((sum, t) => sum + t.amount, 0);
@@ -823,6 +1283,11 @@
         }
 
         function updateGoalProgress(balance) {
+            if (!currentUser) return;
+
+            const userData = database.getUserData(currentUser);
+            const savingsGoalAmount = userData.savingsGoal;
+
             if (savingsGoalAmount > 0) {
                 const percentage = Math.min((balance / savingsGoalAmount) * 100, 100);
                 document.getElementById('progressFill').style.width = percentage + '%';
@@ -831,7 +1296,21 @@
             }
         }
 
-        updateUI();
+        // Enter key support and amount formatting
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('loginPassword').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') login();
+            });
+            
+            document.getElementById('regConfirmPassword').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') register();
+            });
+
+            // Format amount input
+            document.getElementById('amount').addEventListener('input', function(e) {
+                formatNumberInput(e.target);
+            });
+        });
     </script>
 </body>
 </html>
