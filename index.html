@@ -733,6 +733,76 @@
             font-weight: 600;
         }
 
+        /* MODAL CHANGE PASSWORD */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .modal-content {
+            background: rgba(15, 25, 50, 0.95);
+            border: 2px solid rgba(0, 255, 255, 0.5);
+            padding: 40px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 450px;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 20px 60px rgba(0, 255, 255, 0.3);
+            animation: modalSlideIn 0.3s ease;
+            position: relative;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                transform: translateY(-50px) scale(0.9);
+            }
+            to {
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .modal-content h2 {
+            font-family: 'Orbitron', sans-serif;
+            color: #ff00ff;
+            margin-bottom: 30px;
+            font-size: 24px;
+            text-align: center;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 30px;
+            color: #ff0055;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+
+        .close-modal:hover {
+            color: #ff00ff;
+            transform: rotate(90deg);
+        }
+
         .particles {
             position: fixed;
             top: 0;
@@ -867,6 +937,7 @@
                 </div>
                 <div class="user-info">
                     <div class="username-display">👤 <span id="currentUsername"></span></div>
+                    <button class="btn-change-password" onclick="openChangePassword()">🔑 Change Password</button>
                     <button class="btn-logout" onclick="logout()">🚪 Logout</button>
                 </div>
             </header>
@@ -957,6 +1028,31 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- MODAL CHANGE PASSWORD -->
+    <div class="modal" id="changePasswordModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeChangePassword()">&times;</span>
+            <h2>🔑 Change Password</h2>
+            
+            <div class="error-message" id="modalErrorMessage"></div>
+            <div class="success-message" id="modalSuccessMessage"></div>
+
+            <div class="form-group">
+                <label>Current Password</label>
+                <input type="password" id="currentPassword" placeholder="Enter current password">
+            </div>
+            <div class="form-group">
+                <label>New Password</label>
+                <input type="password" id="newPassword" placeholder="Enter new password">
+            </div>
+            <div class="form-group">
+                <label>Confirm New Password</label>
+                <input type="password" id="confirmNewPassword" placeholder="Confirm new password">
+            </div>
+            <button class="btn-primary" onclick="changePassword()">✅ Update Password</button>
         </div>
     </div>
 
@@ -1117,6 +1213,76 @@
                 document.getElementById('loginUsername').value = '';
                 document.getElementById('loginPassword').value = '';
             }
+        }
+
+        function openChangePassword() {
+            document.getElementById('changePasswordModal').style.display = 'flex';
+            document.getElementById('currentPassword').value = '';
+            document.getElementById('newPassword').value = '';
+            document.getElementById('confirmNewPassword').value = '';
+            document.getElementById('modalErrorMessage').style.display = 'none';
+            document.getElementById('modalSuccessMessage').style.display = 'none';
+        }
+
+        function closeChangePassword() {
+            document.getElementById('changePasswordModal').style.display = 'none';
+        }
+
+        function showModalError(message) {
+            const errorEl = document.getElementById('modalErrorMessage');
+            errorEl.textContent = message;
+            errorEl.style.display = 'block';
+            setTimeout(() => errorEl.style.display = 'none', 3000);
+        }
+
+        function showModalSuccess(message) {
+            const successEl = document.getElementById('modalSuccessMessage');
+            successEl.textContent = message;
+            successEl.style.display = 'block';
+        }
+
+        function changePassword() {
+            if (!currentUser) return;
+
+            const currentPass = document.getElementById('currentPassword').value;
+            const newPass = document.getElementById('newPassword').value;
+            const confirmPass = document.getElementById('confirmNewPassword').value;
+
+            if (!currentPass || !newPass || !confirmPass) {
+                showModalError('⚠️ Please fill in all fields!');
+                return;
+            }
+
+            const userData = database.getUserData(currentUser);
+
+            if (userData.password !== currentPass) {
+                showModalError('⚠️ Current password is incorrect!');
+                return;
+            }
+
+            if (newPass.length < 4) {
+                showModalError('⚠️ New password must be at least 4 characters!');
+                return;
+            }
+
+            if (newPass !== confirmPass) {
+                showModalError('⚠️ New passwords do not match!');
+                return;
+            }
+
+            if (newPass === currentPass) {
+                showModalError('⚠️ New password must be different from current password!');
+                return;
+            }
+
+            // Update password
+            userData.password = newPass;
+            showModalSuccess('✅ Password changed successfully!');
+
+            // Close modal after 2 seconds
+            setTimeout(() => {
+                closeChangePassword();
+            }, 2000);
         }
 
         function loadUserData() {
@@ -1309,6 +1475,18 @@
             // Format amount input
             document.getElementById('amount').addEventListener('input', function(e) {
                 formatNumberInput(e.target);
+            });
+
+            // Close modal when clicking outside
+            document.getElementById('changePasswordModal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeChangePassword();
+                }
+            });
+
+            // Enter key for change password
+            document.getElementById('confirmNewPassword').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') changePassword();
             });
         });
     </script>
